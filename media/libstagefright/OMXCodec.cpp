@@ -1898,6 +1898,9 @@ status_t OMXCodec::allocateOutputBuffersFromNativeWindow() {
             def.format.video.eColorFormat);
 #ifdef QCOM_HARDWARE
     format = def.format.video.eColorFormat;
+    if (format == 21)
+      format = HAL_PIXEL_FORMAT_YCbCr_420_SP;
+
     if(def.format.video.eColorFormat == OMX_QCOM_COLOR_FormatYVU420SemiPlanar)
       format = HAL_PIXEL_FORMAT_YCrCb_420_SP;
 
