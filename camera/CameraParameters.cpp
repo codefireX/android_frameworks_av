@@ -598,11 +598,6 @@ void CameraParameters::setPreviewSize(int width, int height)
     set(KEY_PREVIEW_SIZE, str);
 }
 
-void CameraParameters::setPostviewSize(int width, int height)
-{
-    // dummy
-}
-
 void CameraParameters::getPreviewSize(int *width, int *height) const
 {
     *width = *height = -1;
