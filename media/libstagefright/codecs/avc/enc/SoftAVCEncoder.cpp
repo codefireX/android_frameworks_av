@@ -131,13 +131,16 @@ inline static void ConvertYUV420SemiPlanarToYUV420Planar(
     }
 }
 
-static int32_t MallocWrapper(
+static void* MallocWrapper(
         void *userData, int32_t size, int32_t attrs) {
-    return reinterpret_cast<int32_t>(malloc(size));
+    void *ptr = malloc(size);
+    if (ptr)
+        memset(ptr, 0, size);
+    return ptr;
 }
 
-static void FreeWrapper(void *userData, int32_t ptr) {
-    free(reinterpret_cast<void *>(ptr));
+static void FreeWrapper(void *userData, void* ptr) {
+    free(ptr);
 }
 
 static int32_t DpbAllocWrapper(void *userData,
@@ -843,12 +846,15 @@ void SoftAVCEncoder::onQueueFilled(OMX_U32 portIndex) {
         outQueue.erase(outQueue.begin());
         CHECK(!mInputBufferInfoVec.empty());
         InputBufferInfo *inputBufInfo = mInputBufferInfoVec.begin();
-        mInputBufferInfoVec.erase(mInputBufferInfoVec.begin());
         outHeader->nTimeStamp = inputBufInfo->mTimeUs;
         outHeader->nFlags |= (inputBufInfo->mFlags | OMX_BUFFERFLAG_ENDOFFRAME);
+        if (mSawInputEOS) {
+            outHeader->nFlags |= OMX_BUFFERFLAG_EOS;
+        }
         outHeader->nFilledLen = dataLength;
         outInfo->mOwnedByUs = false;
         notifyFillBufferDone(outHeader);
+        mInputBufferInfoVec.erase(mInputBufferInfoVec.begin());
     }
 }
 

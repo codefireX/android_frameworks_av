@@ -2605,6 +2605,8 @@ int64_t OMXCodec::getDecodingTimeUs() {
 }
 
 void OMXCodec::on_message(const omx_message &msg) {
+    // even in error state, we still need to process EMPTY_BUFFER_DONE
+    // and FILL_BUFFER_DONE event, or we will run into mediaserver crash issue
     if (mState == ERROR) {
         /*
          * only drop EVENT messages, EBD and FBD are still
