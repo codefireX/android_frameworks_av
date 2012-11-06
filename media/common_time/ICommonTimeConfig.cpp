@@ -13,8 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-#include <sys/socket.h>
+#include <linux/socket.h>
 
 #include <common_time/ICommonTimeConfig.h>
 #include <binder/Parcel.h>

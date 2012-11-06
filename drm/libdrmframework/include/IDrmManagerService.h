@@ -70,7 +70,6 @@ public:
         GET_ALL_SUPPORT_INFO,
         OPEN_DECRYPT_SESSION,
         OPEN_DECRYPT_SESSION_FROM_URI,
-        OPEN_DECRYPT_SESSION_FOR_STREAMING,
         CLOSE_DECRYPT_SESSION,
         INITIALIZE_DECRYPT_UNIT,
         DECRYPT,
@@ -146,9 +145,6 @@ public:
 
     virtual DecryptHandle* openDecryptSession(
                 int uniqueId, const char* uri, const char* mime) = 0;
-
-    virtual DecryptHandle* openDecryptSession(
-            int uniqueId, const DrmBuffer& buf, const String8& mimeType) = 0;
 
     virtual status_t closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle) = 0;
 
@@ -235,9 +231,6 @@ public:
 
     virtual DecryptHandle* openDecryptSession(
                 int uniqueId, const char* uri, const char* mime);
-
-    virtual DecryptHandle* openDecryptSession(
-            int uniqueId, const DrmBuffer& buf, const String8& mimeType);
 
     virtual status_t closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle);
 

@@ -16,10 +16,8 @@ armVCM4P10_InvTransformDequantLumaDC4x4:
     PUSH     {r4-r6,lr}
     VPUSH    {d8-d13}
     VLD4.16  {d0,d1,d2,d3},[r0]
-    LDR      r2, .LarmVCM4P10_QPDivTable
-P0: ADD      r2, pc
-    LDR      r3, .LarmVCM4P10_VMatrixQPModTable
-P1: ADD      r3, pc
+    LDR      r2, =armVCM4P10_QPDivTable
+    LDR      r3, =armVCM4P10_VMatrixQPModTable
     VADD.I16 d4,d0,d1
     VADD.I16 d5,d2,d3
     VSUB.I16 d6,d0,d1
@@ -59,11 +57,6 @@ P1: ADD      r3, pc
     VPOP     {d8-d13}
     POP      {r4-r6,pc}
     .endfunc
-
-.LarmVCM4P10_QPDivTable:
-    .word armVCM4P10_QPDivTable-(P0+8)
-.LarmVCM4P10_VMatrixQPModTable:
-    .word armVCM4P10_VMatrixQPModTable-(P1+8)
 
 .global omxVCM4P10_TransformDequantLumaDCFromPair
 .func   omxVCM4P10_TransformDequantLumaDCFromPair

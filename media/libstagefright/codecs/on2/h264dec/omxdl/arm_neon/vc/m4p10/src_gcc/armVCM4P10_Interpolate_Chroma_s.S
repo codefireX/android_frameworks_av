@@ -9,18 +9,20 @@
     .arm
     .fpu neon
 
-    .text
+    .section .rodata
     .align 4
 
 armVCM4P10_WidthBranchTableMVIsNotZero:
-    .word   WidthIs2MVIsNotZero-(P0+8), WidthIs2MVIsNotZero-(P0+8)
-    .word   WidthIs4MVIsNotZero-(P0+8), WidthIs4MVIsNotZero-(P0+8)
-    .word   WidthIs8MVIsNotZero-(P0+8)
+    .word   WidthIs2MVIsNotZero, WidthIs2MVIsNotZero
+    .word   WidthIs4MVIsNotZero, WidthIs4MVIsNotZero
+    .word   WidthIs8MVIsNotZero
 
 armVCM4P10_WidthBranchTableMVIsZero:
-    .word   WidthIs2MVIsZero-(P0+8), WidthIs2MVIsZero-(P0+8)
-    .word   WidthIs4MVIsZero-(P0+8), WidthIs4MVIsZero-(P0+8)
-    .word   WidthIs8MVIsZero-(P0+8)
+    .word   WidthIs2MVIsZero, WidthIs2MVIsZero
+    .word   WidthIs4MVIsZero, WidthIs4MVIsZero
+    .word   WidthIs8MVIsZero
+
+    .text
 
     .global armVCM4P10_Interpolate_Chroma
     .func   armVCM4P10_Interpolate_Chroma
@@ -33,9 +35,9 @@ armVCM4P10_Interpolate_Chroma:
     RSB      r9,r7,#8
     CMN      r6,r7
     MOV      r10,#1
-    ADREQ    r11, armVCM4P10_WidthBranchTableMVIsZero
+    LDREQ    r11, =armVCM4P10_WidthBranchTableMVIsZero
     SUB      lr,r1,r10
-    ADRNE    r11, armVCM4P10_WidthBranchTableMVIsNotZero
+    LDRNE    r11, =armVCM4P10_WidthBranchTableMVIsNotZero
     VLD1.8   {d0},[r0],r10
     SMULBB   r12,r8,r9
     SMULBB   r9,r6,r9
@@ -46,8 +48,7 @@ armVCM4P10_Interpolate_Chroma:
     VDUP.8   d13,r9
     VDUP.8   d14,r8
     VDUP.8   d15,r6
-    LDR      r11,[r11, r4, lsl #1]
-P0: ADD      pc,r11
+    LDR      pc,[r11,r4,LSL #1]
 
 WidthIs8MVIsNotZero:
     VLD1.8   {d2},[r0],r10

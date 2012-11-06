@@ -20,3 +20,5 @@ endif
 
 VOTEST := 0
 
+VO_CFLAGS:=-DLINUX
+

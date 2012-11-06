@@ -18,7 +18,6 @@
 #define LOG_TAG "ARTPConnection"
 #include <utils/Log.h>
 
-#include "ARTPAssembler.h"
 #include "ARTPConnection.h"
 
 #include "ARTPSource.h"

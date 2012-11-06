@@ -272,11 +272,6 @@ sp<DecryptHandle> DrmManagerClientImpl::openDecryptSession(
     return handle;
 }
 
-sp<DecryptHandle> DrmManagerClientImpl::openDecryptSession(
-            int uniqueId, const DrmBuffer& buf, const String8& mimeType) {
-    return getDrmManagerService()->openDecryptSession(uniqueId, buf, mimeType);
-}
-
 status_t DrmManagerClientImpl::closeDecryptSession(
         int uniqueId, sp<DecryptHandle> &decryptHandle) {
     status_t status = DRM_ERROR_UNKNOWN;

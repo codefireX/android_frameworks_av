@@ -27,36 +27,42 @@ Permission to distribute, modify and use this file under the standard license
 terms listed above has been obtained from the copyright holder.
 ****************************************************************************************/
 /*
-
- Pathname: ./audio/gsm-amr/c/include/frame_type_3gpp.h
+ Name: pvamrnbdecoder_api.h
 
 ------------------------------------------------------------------------------
  REVISION HISTORY
 
- Description: Updated to new PV C header template.
 
- Description: Added #ifdef __cplusplus after Include section.
-
- Who:                       Date:
+ Who:                                       Date:
  Description:
 
 ------------------------------------------------------------------------------
  INCLUDE DESCRIPTION
 
- This file contains the definition of the 3GPP frame types.
+ Main header file for the Packet Video AMR Narrow  Band  decoder library. The
+ constants, structures, and functions defined within this file, along with
+ a basic data types header file, is all that is needed to use and communicate
+ with the library. The internal data structures within the library are
+ purposely hidden.
+
+------------------------------------------------------------------------------
+ REFERENCES
 
 ------------------------------------------------------------------------------
 */
 
-#ifndef FRAME_TYPE_3GPP_H
-#define FRAME_TYPE_3GPP_H
+/*----------------------------------------------------------------------------
+; CONTINUE ONLY IF NOT ALREADY DEFINED
+----------------------------------------------------------------------------*/
+#ifndef _PVAMRNBDECODER_API_H
+#define _PVAMRNBDECODER_API_H
+
+#include    "pvgsmamrdecoderinterface.h"
+
 
 /*----------------------------------------------------------------------------
 ; INCLUDES
 ----------------------------------------------------------------------------*/
-
-
-/*--------------------------------------------------------------------------*/
 #ifdef __cplusplus
 extern "C"
 {
@@ -71,6 +77,11 @@ extern "C"
     ; DEFINES
     ; Include all pre-processor statements here.
     ----------------------------------------------------------------------------*/
+#define MAX_NUM_FRAMES_PER_PACKET 20 /* Max number of frames per packet */
+
+#define MAX_NUM_PACKED_INPUT_BYTES 32 /* Max number of packed input bytes */
+
+#define L_FRAME      160
 
     /*----------------------------------------------------------------------------
     ; EXTERNAL VARIABLES REFERENCES
@@ -85,39 +96,27 @@ extern "C"
     ; ENUMERATED TYPEDEF'S
     ----------------------------------------------------------------------------*/
 
-    enum Frame_Type_3GPP
-    {
-        AMR_475 = 0,        /* 4.75 kbps    */
-        AMR_515,            /* 5.15 kbps    */
-        AMR_59,             /* 5.9 kbps     */
-        AMR_67,             /* 6.7 kbps     */
-        AMR_74,             /* 7.4 kbps     */
-        AMR_795,            /* 7.95 kbps    */
-        AMR_102,            /* 10.2 kbps    */
-        AMR_122,            /* 12.2 kbps    */
-        AMR_SID,            /* GSM AMR DTX  */
-        GSM_EFR_SID,        /* GSM EFR DTX  */
-        TDMA_EFR_SID,       /* TDMA EFR DTX */
-        PDC_EFR_SID,        /* PDC EFR DTX  */
-        FOR_FUTURE_USE1,    /* Unused 1     */
-        FOR_FUTURE_USE2,    /* Unused 2     */
-        FOR_FUTURE_USE3,    /* Unused 3     */
-        AMR_NO_DATA         /* No data      */
-    };
-
     /*----------------------------------------------------------------------------
     ; STRUCTURES TYPEDEF'S
     ----------------------------------------------------------------------------*/
+
 
     /*----------------------------------------------------------------------------
     ; GLOBAL FUNCTION DEFINITIONS
     ; Function Prototype declaration
     ----------------------------------------------------------------------------*/
+
+
+
+    /*----------------------------------------------------------------------------
+    ; END
+    ----------------------------------------------------------------------------*/
+
 #ifdef __cplusplus
 }
 #endif
 
 
-#endif  /* _FRAME_TYPE_3GPP_H_ */
+#endif  /* PVMP4AUDIODECODER_API_H */
 
 

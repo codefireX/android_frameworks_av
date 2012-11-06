@@ -43,7 +43,6 @@ static void usage(const char *me) {
     fprintf(stderr, "       -l encoder level. see omx il header (default: encoder specific)\n");
     fprintf(stderr, "       -p encoder profile. see omx il header (default: encoder specific)\n");
     fprintf(stderr, "       -v video codec: [0] AVC [1] M4V [2] H263 (default: 0)\n");
-    fprintf(stderr, "       -s(oftware) prefer software codec\n");
     fprintf(stderr, "The output file is /sdcard/output.mp4\n");
     exit(1);
 }
@@ -163,11 +162,10 @@ int main(int argc, char **argv) {
     int profile = -1;      // Encoder specific default
     int codec = 0;
     const char *fileName = "/sdcard/output.mp4";
-    bool preferSoftwareCodec = false;
 
     android::ProcessState::self()->startThreadPool();
     int res;
-    while ((res = getopt(argc, argv, "b:c:f:i:n:w:t:l:p:v:hs")) >= 0) {
+    while ((res = getopt(argc, argv, "b:c:f:i:n:w:t:l:p:v:h")) >= 0) {
         switch (res) {
             case 'b':
             {
@@ -235,12 +233,6 @@ int main(int argc, char **argv) {
                 break;
             }
 
-            case 's':
-            {
-                preferSoftwareCodec = true;
-                break;
-            }
-
             case 'h':
             default:
             {
@@ -286,15 +278,13 @@ int main(int argc, char **argv) {
 
     sp<MediaSource> encoder =
         OMXCodec::Create(
-                client.interface(), enc_meta, true /* createEncoder */, source,
-                0, preferSoftwareCodec ? OMXCodec::kPreferSoftwareCodecs : 0);
+                client.interface(), enc_meta, true /* createEncoder */, source);
 
     sp<MPEG4Writer> writer = new MPEG4Writer(fileName);
     writer->addSource(encoder);
     int64_t start = systemTime();
     CHECK_EQ((status_t)OK, writer->start());
     while (!writer->reachedEOS()) {
-        usleep(100000);
     }
     err = writer->stop();
     int64_t end = systemTime();

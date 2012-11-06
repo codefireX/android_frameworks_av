@@ -49,9 +49,7 @@ Filt_6k_7k_asm:
 
 
 
-          ADR     		r3, Lable1                  @ get fir_7k address
-          LDR    		r10, [r3]
-          ADD    		r10, r3
+          LDR     		r10, Lable1                 @ get fir_7k address
           MOV                   r3, r8                      @ change myMemCopy to Copy, due to Copy will change r3 content
           ADD     	    	r6, r13, #60                @ get x[L_FIR - 1] address
           MOV           	r7, r3                      @ get signal[i]
@@ -223,7 +221,7 @@ Filt_6k_7k_end:
           LDMFD   		r13!, {r0 - r12, r15}
 
 Lable1:
-          .word   		fir_6k_7k-Lable1
+          .word   		fir_6k_7k
           @ENDFUNC
           .END
 
